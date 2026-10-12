@@ -1,0 +1,25 @@
+name: Validate examples
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  postgis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Start PostGIS
+        run: docker compose up -d db
+
+      - name: Run examples and assertions
+        run: bash scripts/run_examples.sh
+
+      - name: Stop PostGIS
+        if: always()
+        run: docker compose down --volumes
