@@ -1,5 +1,7 @@
 # postgis-patterns — Production PostGIS Patterns & Best Practices for PostgreSQL
 
+[![Validate examples](https://github.com/ZQM-Computing/postgis-patterns/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-patterns/actions)
+
 Production-minded PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
 
 The examples use a small, synthetic dataset shaped like a Florida county: service areas, sites, parcels, and sensor observations. Every pattern answers a practical question, runs against the sample data, and calls out the trade-off or anti-pattern that matters in production.
