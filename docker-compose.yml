@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: postgis-patterns-db
+    environment:
+      POSTGRES_DB: postgis_patterns
+      POSTGRES_USER: patterns
+      # Disposable local demo only: trust authentication inside the container,
+      # with the host port bound to localhost below. Do not expose this setup
+      # or reuse it for a shared or production database.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:${POSTGIS_PORT:-54329}:5432"
+    volumes:
+      - postgis_patterns_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patterns -d postgis_patterns"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+volumes:
+  postgis_patterns_data:

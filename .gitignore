@@ -1,0 +1,23 @@
+# Local environment
+.env
+.env.*
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Database and export artifacts
+*.dump
+*.backup
+*.geojson
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.csv
+
+# Logs
+*.log
