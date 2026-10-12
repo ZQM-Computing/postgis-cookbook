@@ -114,6 +114,11 @@ Issues and pull requests are welcome — especially patterns with a runnable exa
 
 Maintained by [ZQM Computing](https://github.com/ZQM-Computing). Patterns distilled from production geospatial platform, spatial data engineering, and climate-resilience analysis work by Alex Zelenski, GISP.
 
+## More from this series
+
+- [qgis-resources](https://github.com/ZQM-Computing/qgis-resources) — QGIS expressions, PyQGIS snippets, Processing scripts, styles, and QField field-collection guides
+- [geospatial-api-reference](https://github.com/ZQM-Computing/geospatial-api-reference) — OGC API – Features reference implementation with FastAPI and PostGIS backends
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
