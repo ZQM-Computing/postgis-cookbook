@@ -1,5 +1,15 @@
 # postgis-patterns — Production PostGIS Patterns & Best Practices for PostgreSQL
 
+<!-- ZQM-START -->
+<p align="center">
+  <strong>ZQM Labs — Z's Quests & Mischief</strong><br>
+  <a href="https://zqmlabs.com">zqmlabs.com</a> •
+  <a href="https://github.com/ZQM-Labs">GitHub</a>
+</p>
+<!-- ZQM-END -->
+
+
+
 [![Validate examples](https://github.com/ZQM-Computing/postgis-patterns/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-patterns/actions)
 
 Production-minded PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
@@ -148,3 +158,15 @@ MIT — see [`LICENSE`](LICENSE).
 - [h3-patterns](https://github.com/ZQM-Computing/h3-patterns) — H3 hexagonal grid patterns
 
 *Part of [ZQM Labs](https://github.com/ZQM-Labs) — games, gear & a little mischief.*
+
+
+<!-- ZQM-FOOTER-START -->
+---
+
+<p align="center">
+  <em>Play more. Plan less.</em><br>
+  <a href="https://zqmlabs.com">zqmlabs.com</a> •
+  <a href="https://github.com/ZQM-Labs">ZQM Labs</a> •
+  <a href="https://github.com/ZQM-Computing">ZQM Computing</a>
+</p>
+<!-- ZQM-FOOTER-END -->
