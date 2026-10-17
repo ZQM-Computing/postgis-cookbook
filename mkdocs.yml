@@ -1,0 +1,10 @@
+site_name: PostGIS Patterns
+site_description: Practical, testable PostgreSQL and PostGIS examples.
+docs_dir: docs
+site_dir: site
+strict: true
+theme:
+  name: material
+nav:
+  - Overview: index.md
+  - Pattern Guide: pattern-guide.md
