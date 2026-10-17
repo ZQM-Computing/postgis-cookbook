@@ -1,28 +1,34 @@
-# Contributing
+# Contributing to ZQM Computing
 
-Thanks for helping make these patterns more useful.
+Thank you for your interest in contributing to ZQM Computing — geospatial patterns and tools.
 
-## What makes a good pattern
+## How to Contribute
 
-A strong contribution includes:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add your feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
-1. The production problem, in plain language.
-2. Runnable SQL against the synthetic demo dataset, or a clearly isolated extension of it.
-3. The index, CRS, or planner assumption the pattern depends on.
-4. The trade-off — memory, write cost, precision, lock risk, or operational complexity.
-5. An assertion or expected result when the behavior can be tested deterministically.
+## Code Standards
 
-## Ground rules
+- Follow existing code style
+- Add tests for new features
+- Update documentation as needed
+- Keep commits atomic and descriptive
+- All repos are MIT-licensed unless otherwise noted
 
-- Do not submit real parcel, utility, customer, infrastructure-sensitive, or personally identifying data.
-- Keep coordinates and SRIDs explicit.
-- Prefer `ST_DWithin` over filtering on a computed distance when an index should participate.
-- Explain any use of Web Mercator for measurement; in most cases, use `geography` or an appropriate projected CRS instead.
-- Run `bash scripts/run_examples.sh` before opening a pull request.
+## Reporting Issues
 
-## Style
+- Use GitHub Issues for bug reports
+- Include steps to reproduce
+- Specify your environment (OS, version, etc)
+- For security vulnerabilities, see [SECURITY.md](SECURITY.md)
 
-- Use lowercase SQL keywords or uppercase consistently within a file; existing files use uppercase for major clauses.
-- Fully qualify demo objects with the `demo` schema.
-- Make setup and pattern files safe to rerun where practical.
-- Keep comments focused on why a choice is made, not a narration of obvious syntax.
+## Questions?
+
+Open an issue or discussion in the repository.
+
+---
+
+*Part of the [ZQM Computing](https://github.com/ZQM-Computing) ecosystem — geospatial patterns and tools.*
