@@ -18,6 +18,16 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 
 **Who this is for:** GIS analysts moving into spatial database work, backend and data engineers adding geospatial queries to PostgreSQL, and geospatial architects who need defensible, production-tested patterns instead of one-off snippets. Think of it as a PostGIS tutorial you can actually run — every example executes end-to-end against the included Docker demo and is verified by CI.
 
+## Repository role and status
+
+**Status:** Active, public.
+
+**What this repository is:** Production PostGIS patterns — a runnable cookbook of spatial SQL covering GiST/SP-GiST/BRIN indexing, spatial joins and nearest-neighbor (KNN) queries, CRS and SRID management, and vector-tile generation.
+
+**What it contributes:** Part of the ZQM Computing public geospatial portfolio — production-grade pattern and reference repositories that document geospatial engineering practice across the stack. This repository is the reusable pattern library for its layer: working code and runbooks that practitioners can lift into their own pipelines, and portfolio evidence of the engineering practice behind ZQM Computing. The umbrella index for the series is [geospatial-patterns](https://github.com/ZQM-Computing/geospatial-patterns).
+
+**Standing:** The portfolio program was completed and Tier-1 hardened on 2026-10-15, with prose CI enforced as required status checks. This repository is standalone — no other repository or deployment depends on it.
+
 ## Patterns
 
 | Pattern | Question it answers | File |
