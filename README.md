@@ -122,7 +122,7 @@ Issues and pull requests are welcome — especially patterns with a runnable exa
 
 Maintained by [ZQM Computing](https://github.com/ZQM-Computing). Patterns distilled from production geospatial platform, spatial data engineering, and climate-resilience analysis work by Alex Zelenski, GISP.
 
-## More from this series
+## Related repositories
 
 - [duckdb-spatial-patterns](https://github.com/ZQM-Computing/duckdb-spatial-patterns) — DuckDB Spatial patterns for analytical geospatial SQL: GeoParquet, spatial joins, KNN, H3 aggregation — no server required
 - [pgrouting-patterns](https://github.com/ZQM-Computing/pgrouting-patterns) — pgRouting network analysis on PostGIS: shortest path, driving distance, isochrones, turn restrictions, traffic-aware routing
@@ -147,27 +147,19 @@ The configured CI workflow is the source of truth for automated checks. A passin
 
 ## Installation
 
+No package to install — the runnable examples run against the demo database in Docker:
+
 ```bash
-pip install -e .
+docker compose up -d db
 ```
 
-Requires Python 3.11+.
+The Makefile documents the main workflows: `make validate` reruns the full example + assertion suite, `make psql` opens psql in the demo database, `make reset` rebuilds the demo from scratch, and `make down` stops the database.
+
+Requires Docker Engine with Compose v2.
 
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
-
-## Related repositories
-
-- [geospatial-patterns](https://github.com/ZQM-Computing/geospatial-patterns) — umbrella index of all geospatial pattern repos
-- [gdal-patterns](https://github.com/ZQM-Computing/gdal-patterns) — GDAL/OGR CLI patterns for raster/vector conversion
-- [geopandas-patterns](https://github.com/ZQM-Computing/geopandas-patterns) — GeoPandas/Shapely patterns for Python geospatial workflows
-- [pgrouting-patterns](https://github.com/ZQM-Computing/pgrouting-patterns) — pgRouting patterns for PostGIS network analysis
-- [stac-patterns](https://github.com/ZQM-Computing/stac-patterns) — STAC patterns for geospatial data discovery
-- [cog-patterns](https://github.com/ZQM-Computing/cog-patterns) — Cloud Optimized GeoTIFF patterns
-- [maplibre-patterns](https://github.com/ZQM-Computing/maplibre-patterns) — MapLibre GL JS patterns for frontend vector tiles
-- [geoparquet-patterns](https://github.com/ZQM-Computing/geoparquet-patterns) — GeoParquet patterns for columnar analytics
-- [h3-patterns](https://github.com/ZQM-Computing/h3-patterns) — H3 hexagonal grid patterns
 
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns.*
 
