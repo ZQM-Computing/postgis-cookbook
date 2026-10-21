@@ -173,7 +173,7 @@ Requires Docker Engine with Compose v2.
 
 MIT — see [`LICENSE`](https://github.com/ZQM-Computing/postgis-patterns/blob/main/LICENSE).
 
-*Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns.*
+*Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns; the geospatial arm of [ZQM Labs](https://zqmlabs.com), makers of Z's Quests & Mischief location games.*
 
 <!-- ZQM-FOOTER-START -->
 <!-- markdownlint-disable MD033 -->
