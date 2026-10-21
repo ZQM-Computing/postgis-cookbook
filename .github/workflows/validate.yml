@@ -17,7 +17,7 @@ concurrency:
 jobs:
   postgis:
     name: Run SQL examples and assertions
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
