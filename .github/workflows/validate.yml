@@ -30,7 +30,21 @@ jobs:
         run: docker compose config --quiet
 
       - name: Start PostGIS and wait for health
-        run: docker compose up -d --wait db
+        run: |
+          # Registry/CDN pulls fail transiently (EOF, 429, 5xx). Retry with
+          # backoff so a network blip never turns a green commit red.
+          for attempt in 1 2 3 4 5; do
+            if docker compose up -d --wait db; then
+              echo "database healthy on attempt ${attempt}"
+              exit 0
+            fi
+            echo "::warning::docker compose up failed (attempt ${attempt}/5); backing off"
+            docker compose down --volumes --remove-orphans || true
+            sleep $((attempt * 10))
+          done
+          echo "::error::PostGIS did not become healthy after 5 attempts"
+          docker compose logs --no-color db || true
+          exit 1
 
       - name: Execute every example and assertion
         run: bash scripts/run_examples.sh
@@ -41,4 +55,4 @@ jobs:
 
       - name: Tear down disposable database
         if: always()
-        run: docker compose down --volumes --remove-orphans
+        run: docker compose down --volumes --remove-orphans || true
