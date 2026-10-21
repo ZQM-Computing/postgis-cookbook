@@ -128,7 +128,7 @@ All features are synthetic. Coordinates fall around Volusia County, Florida so t
 
 ## Contributing
 
-Issues and pull requests are welcome — especially patterns with a runnable example, the production problem it solves, and the trade-off it makes. Please keep examples deterministic and free of real parcel, utility, customer, or otherwise sensitive data. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Issues and pull requests are welcome — especially patterns with a runnable example, the production problem it solves, and the trade-off it makes. Please keep examples deterministic and free of real parcel, utility, customer, or otherwise sensitive data. See [`CONTRIBUTING.md`](https://github.com/ZQM-Computing/postgis-patterns/blob/main/CONTRIBUTING.md).
 
 ## Maintainer
 
@@ -171,7 +171,7 @@ Requires Docker Engine with Compose v2.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT — see [`LICENSE`](https://github.com/ZQM-Computing/postgis-patterns/blob/main/LICENSE).
 
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns.*
 
