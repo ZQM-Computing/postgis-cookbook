@@ -18,6 +18,9 @@ jobs:
   postgis:
     name: Run SQL examples and assertions
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 20
     steps:
       - name: Check out repository
