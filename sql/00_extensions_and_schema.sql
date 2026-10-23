@@ -1,4 +1,4 @@
--- Extensions and schema for the postgis-patterns demo.
+-- Extensions and schema for the postgis-cookbook demo.
 -- The column types enforce geometry type and SRID at write time.
 
 CREATE EXTENSION IF NOT EXISTS postgis;

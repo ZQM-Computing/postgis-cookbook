@@ -1,7 +1,7 @@
 services:
   db:
     image: postgis/postgis:16-3.4-alpine
-    container_name: postgis-patterns-db
+    container_name: postgis-cookbook-db
     environment:
       POSTGRES_DB: postgis_patterns
       POSTGRES_USER: patterns

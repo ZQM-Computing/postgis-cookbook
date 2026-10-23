@@ -26,4 +26,4 @@ run_sql patterns/06_partitioning_and_maintenance.sql
 run_sql tests/assertions.sql
 
 echo
-echo "postgis-patterns: all examples and assertions completed."
+echo "postgis-cookbook: all examples and assertions completed."

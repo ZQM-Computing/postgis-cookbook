@@ -73,4 +73,4 @@ BEGIN
 END
 $$;
 
-SELECT 'postgis-patterns smoke test passed' AS result;
+SELECT 'postgis-cookbook smoke test passed' AS result;
