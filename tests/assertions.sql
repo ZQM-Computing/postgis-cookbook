@@ -9,6 +9,38 @@ BEGIN
         RAISE EXCEPTION 'PostGIS extension is not installed';
     END IF;
 
+    -- Check that the schema still enforces the core relational contract,
+    -- rather than merely passing because today's fixture happens to be clean.
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conrelid = 'demo.service_sites'::regclass
+          AND contype = 'p'
+    ) THEN
+        RAISE EXCEPTION 'service_sites primary key constraint is missing';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conrelid = 'demo.sensor_observations'::regclass
+          AND conname = 'sensor_observations_site_id_fkey'
+          AND contype = 'f'
+    ) THEN
+        RAISE EXCEPTION 'sensor_observations site foreign key is missing';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_attribute
+        WHERE attrelid = 'demo.service_sites'::regclass
+          AND attname = 'geom'
+          AND attnotnull
+          AND NOT attisdropped
+    ) THEN
+        RAISE EXCEPTION 'service_sites.geom must remain NOT NULL';
+    END IF;
+
     IF (SELECT count(*) FROM demo.service_areas) <> 3 THEN
         RAISE EXCEPTION 'Expected 3 service areas';
     END IF;
@@ -290,6 +322,65 @@ BEGIN
     END;
     IF NOT rejected THEN
         RAISE EXCEPTION 'Observation outside configured partitions was accepted';
+    END IF;
+
+    -- The upper bound is exclusive: 2027-01-01 must also fail without a
+    -- 2027 partition. This catches accidental widening of the demo contract.
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.sensor_observations_partitioned
+            (site_id, observed_at, reading_value, geom)
+        VALUES (
+            1,
+            TIMESTAMPTZ '2027-01-01 00:00:00+00',
+            1.0,
+            ST_SetSRID(ST_MakePoint(-81.0, 29.0), 4326)
+        );
+    EXCEPTION WHEN check_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Observation at exclusive upper partition boundary was accepted';
+    END IF;
+
+    -- Geometry typmods must reject both a wrong SRID and a wrong geometry
+    -- subtype. These probes accept only the expected data-contract error
+    -- classes, not arbitrary SQL failures.
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.service_sites (site_id, name, category, opened_on, geom)
+        VALUES (
+            1002,
+            'wrong SRID probe',
+            'test',
+            DATE '2026-01-01',
+            ST_SetSRID(ST_MakePoint(-81.0, 29.0), 3857)
+        );
+    EXCEPTION WHEN check_violation OR invalid_parameter_value THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Service-site geometry with wrong SRID was accepted';
+    END IF;
+
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.service_sites (site_id, name, category, opened_on, geom)
+        VALUES (
+            1003,
+            'wrong geometry type probe',
+            'test',
+            DATE '2026-01-01',
+            ST_SetSRID(ST_MakeLine(
+                ST_MakePoint(-81.0, 29.0),
+                ST_MakePoint(-81.01, 29.01)
+            ), 4326)
+        );
+    EXCEPTION WHEN check_violation OR invalid_parameter_value THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Non-Point geometry was accepted by service_sites.geom';
     END IF;
 
     IF (SELECT count(*) FROM demo.service_sites) <> 9
