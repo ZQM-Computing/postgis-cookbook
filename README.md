@@ -42,7 +42,7 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 | Data quality | How do I find invalid, duplicate, empty, or mixed-SRID data? | [`patterns/05_data_quality.sql`](patterns/05_data_quality.sql) |
 | Partitioning and maintenance | How do I keep a growing spatial table observable and manageable? | [`patterns/06_partitioning_and_maintenance.sql`](patterns/06_partitioning_and_maintenance.sql) |
 
-Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL.
+Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL, [`docs/production-runbook.md`](docs/production-runbook.md) for ingestion, query-plan, migration, security, and recovery checklists, and [`scripts/benchmark_queries.sql`](scripts/benchmark_queries.sql) for a read-only query-plan inspection harness.
 
 ## How the patterns fit together
 
@@ -109,6 +109,8 @@ docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=
 ```text
 .
 ├── docs/pattern-guide.md      # decision rules, anti-patterns, production checklist
+├── docs/production-runbook.md # ingest QA, plan review, security, recovery
+├── scripts/benchmark_queries.sql # repeatable EXPLAIN ANALYZE harness
 ├── sql/                       # extensions, schema, and deterministic sample data
 ├── patterns/                  # numbered, runnable pattern files
 ├── scripts/                   # database wait + full-suite runner
