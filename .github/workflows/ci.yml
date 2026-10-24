@@ -29,4 +29,6 @@ jobs:
         run: |
           test -n "$(find sql patterns examples -type f -name '*.sql' -print -quit)"
           test -f tests/assertions.sql
+          test -f scripts/benchmark_queries.sql
+          test -f docs/production-runbook.md
           bash -n scripts/run_examples.sh scripts/wait_for_db.sh

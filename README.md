@@ -72,7 +72,7 @@ docker compose up -d db
 bash scripts/run_examples.sh
 ```
 
-The runner waits for PostgreSQL, creates the extensions and sample data, executes every pattern, and finishes with smoke-test assertions.
+The runner waits for PostgreSQL, creates the extensions and sample data, executes every pattern, and finishes with smoke-test assertions. CI then executes the read-only `EXPLAIN (ANALYZE, BUFFERS)` benchmark harness to catch query regressions and syntax/runtime errors; the tiny fixture is not a performance benchmark.
 
 Useful commands:
 
