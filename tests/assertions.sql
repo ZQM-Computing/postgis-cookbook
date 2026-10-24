@@ -28,7 +28,8 @@ BEGIN
     IF EXISTS (
         SELECT 1
         FROM demo.service_areas
-        WHERE ST_SRID(geom) <> 4326
+        WHERE geom IS NULL
+           OR ST_SRID(geom) <> 4326
            OR ST_IsEmpty(geom)
            OR NOT ST_IsValid(geom)
     ) THEN
@@ -38,7 +39,8 @@ BEGIN
     IF EXISTS (
         SELECT 1
         FROM demo.parcels
-        WHERE ST_SRID(geom) <> 4326
+        WHERE geom IS NULL
+           OR ST_SRID(geom) <> 4326
            OR ST_IsEmpty(geom)
            OR NOT ST_IsValid(geom)
     ) THEN
@@ -123,7 +125,8 @@ BEGIN
     IF EXISTS (
         SELECT 1
         FROM demo.service_sites
-        WHERE ST_SRID(geom) <> 4326
+        WHERE geom IS NULL
+           OR ST_SRID(geom) <> 4326
            OR GeometryType(geom) <> 'POINT'
            OR ST_IsEmpty(geom)
            OR NOT ST_IsValid(geom)
@@ -135,7 +138,8 @@ BEGIN
         SELECT 1
         FROM demo.sensor_observations AS observation
         JOIN demo.service_sites AS site USING (site_id)
-        WHERE ST_SRID(observation.geom) <> 4326
+        WHERE observation.geom IS NULL
+           OR ST_SRID(observation.geom) <> 4326
            OR ST_IsEmpty(observation.geom)
            OR NOT ST_IsValid(observation.geom)
            OR NOT ST_Equals(observation.geom, site.geom)
