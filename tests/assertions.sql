@@ -27,10 +27,22 @@ BEGIN
 
     IF EXISTS (
         SELECT 1
-        FROM demo.parcels
-        WHERE ST_SRID(geom) <> 4326 OR NOT ST_IsValid(geom)
+        FROM demo.service_areas
+        WHERE ST_SRID(geom) <> 4326
+           OR ST_IsEmpty(geom)
+           OR NOT ST_IsValid(geom)
     ) THEN
-        RAISE EXCEPTION 'Parcel data failed SRID or validity checks';
+        RAISE EXCEPTION 'Service-area data failed SRID, emptiness, or validity checks';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM demo.parcels
+        WHERE ST_SRID(geom) <> 4326
+           OR ST_IsEmpty(geom)
+           OR NOT ST_IsValid(geom)
+    ) THEN
+        RAISE EXCEPTION 'Parcel data failed SRID, emptiness, or validity checks';
     END IF;
 
     IF (
@@ -114,8 +126,42 @@ BEGIN
         WHERE ST_SRID(geom) <> 4326
            OR GeometryType(geom) <> 'POINT'
            OR ST_IsEmpty(geom)
+           OR NOT ST_IsValid(geom)
     ) THEN
         RAISE EXCEPTION 'Service-site geometry contract failed';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM demo.sensor_observations AS observation
+        JOIN demo.service_sites AS site USING (site_id)
+        WHERE ST_SRID(observation.geom) <> 4326
+           OR ST_IsEmpty(observation.geom)
+           OR NOT ST_IsValid(observation.geom)
+           OR NOT ST_Equals(observation.geom, site.geom)
+    ) THEN
+        RAISE EXCEPTION 'Observation geometry must be valid and match its source site';
+    END IF;
+
+    IF EXISTS (
+        SELECT site_id
+        FROM demo.sensor_observations
+        GROUP BY site_id
+        HAVING count(*) <> 3
+    ) OR (
+        SELECT count(DISTINCT site_id)
+        FROM demo.sensor_observations
+    ) <> (SELECT count(*) FROM demo.service_sites) THEN
+        RAISE EXCEPTION 'Expected exactly three observations for every service site';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM demo.sensor_observations
+        WHERE observed_at < TIMESTAMPTZ '2026-01-01 00:00:00+00'
+           OR observed_at >= TIMESTAMPTZ '2027-01-01 00:00:00+00'
+    ) THEN
+        RAISE EXCEPTION 'Observation timestamps are outside the 2026 demo partition window';
     END IF;
 
     IF (SELECT count(*) FROM demo.service_area_measurements) <> 3 THEN
