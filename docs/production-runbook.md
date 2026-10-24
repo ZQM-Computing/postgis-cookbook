@@ -15,18 +15,6 @@ Example invalid-geometry triage:
 ```sql
 SELECT
     source_id,
-    ST_IsValidReason(geom) AS reason,
-    ST_AsText(ST_IsValidLocation(geom)) AS location
-FROM staging.incoming_features
-WHERE geom IS NOT NULL
-  AND NOT ST_IsValid(geom);
-```
-
-Note: `ST_IsValidLocation` is not a PostGIS function. Use this executable form instead:
-
-```sql
-SELECT
-    source_id,
     (ST_IsValidDetail(geom)).reason AS reason,
     ST_AsText((ST_IsValidDetail(geom)).location) AS location
 FROM staging.incoming_features
