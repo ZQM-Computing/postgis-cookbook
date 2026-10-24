@@ -1,6 +1,7 @@
+# postgis-cookbook — Production PostGIS Cookbook & Best Practices for PostgreSQL
+
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/postgis-cookbook?style=social)
-# postgis-cookbook — Production PostGIS Cookbook & Best Practices for PostgreSQL
 
 <!-- ZQM-START -->
 <!-- markdownlint-disable MD033 -->
