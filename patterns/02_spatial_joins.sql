@@ -66,16 +66,24 @@ LEFT JOIN demo.parcels AS parcel
 GROUP BY area.area_id, area.name
 ORDER BY area.name;
 
--- Find the closest service area to an external point. For polygons, <-> orders
--- by bounding-box center distance, so calculate the exact distance for the
--- returned candidates when precision matters.
+-- Find the exact three closest service areas to an external point.
+-- Polygon <-> ordering uses bounding-box distance, which is not guaranteed to
+-- match exact geography distance. For this small demo, rank every area by the
+-- exact metric. At scale, use KNN only to generate candidates and document that
+-- a fixed-size shortlist is approximate unless its recall is proven.
 WITH search_point AS (
     SELECT ST_SetSRID(ST_MakePoint(-81.30, 29.20), 4326) AS geom
+),
+distances AS (
+    SELECT
+        area.name,
+        ST_Distance(area.geom::geography, search.geom::geography) AS exact_distance_m
+    FROM demo.service_areas AS area
+    CROSS JOIN search_point AS search
 )
 SELECT
-    area.name,
-    round((ST_Distance(area.geom::geography, search.geom::geography) / 1000.0)::numeric, 2) AS exact_distance_km
-FROM demo.service_areas AS area
-CROSS JOIN search_point AS search
-ORDER BY search.geom <-> area.geom
+    name,
+    round((exact_distance_m / 1000.0)::numeric, 2) AS exact_distance_km
+FROM distances
+ORDER BY exact_distance_m, name
 LIMIT 3;
