@@ -1,6 +1,6 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/postgis-cookbook?style=social)
-# postgis-patterns — Production PostGIS Patterns & Best Practices for PostgreSQL
+# postgis-cookbook — Production PostGIS Patterns & Best Practices for PostgreSQL
 
 <!-- ZQM-START -->
 <!-- markdownlint-disable MD033 -->
@@ -12,7 +12,7 @@
 <!-- markdownlint-enable MD033 -->
 <!-- ZQM-END -->
 
-[![Validate examples](https://github.com/ZQM-Computing/postgis-patterns/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-patterns/actions)
+[![Validate examples](https://github.com/ZQM-Computing/postgis-cookbook/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-cookbook/actions)
 
 Production-minded PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
 
@@ -65,8 +65,8 @@ The operating model is deliberate: validate before promotion, enforce coordinate
 Requirements: Docker Engine or Docker Desktop with Compose v2. Make is optional.
 
 ```bash
-git clone https://github.com/ZQM-Computing/postgis-patterns.git
-cd postgis-patterns
+git clone https://github.com/ZQM-Computing/postgis-cookbook.git
+cd postgis-cookbook
 docker compose up -d db
 bash scripts/run_examples.sh
 ```
@@ -130,7 +130,7 @@ All features are synthetic. Coordinates fall around Volusia County, Florida so t
 
 ## Contributing
 
-Issues and pull requests are welcome — especially patterns with a runnable example, the production problem it solves, and the trade-off it makes. Please keep examples deterministic and free of real parcel, utility, customer, or otherwise sensitive data. See [`CONTRIBUTING.md`](https://github.com/ZQM-Computing/postgis-patterns/blob/main/CONTRIBUTING.md).
+Issues and pull requests are welcome — especially patterns with a runnable example, the production problem it solves, and the trade-off it makes. Please keep examples deterministic and free of real parcel, utility, customer, or otherwise sensitive data. See [`CONTRIBUTING.md`](https://github.com/ZQM-Computing/postgis-cookbook/blob/main/CONTRIBUTING.md).
 
 ## Maintainer
 
@@ -173,7 +173,7 @@ Requires Docker Engine with Compose v2.
 
 ## License
 
-MIT — see [`LICENSE`](https://github.com/ZQM-Computing/postgis-patterns/blob/main/LICENSE).
+MIT — see [`LICENSE`](https://github.com/ZQM-Computing/postgis-cookbook/blob/main/LICENSE).
 
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns; the geospatial arm of [ZQM Labs](https://zqmlabs.com), makers of Z's Quests & Mischief location games.*
 
