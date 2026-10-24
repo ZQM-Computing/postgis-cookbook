@@ -216,3 +216,88 @@ END
 $$;
 
 SELECT 'postgis-cookbook smoke test passed' AS result;
+
+
+-- Negative-path regression tests: prove the demo schema rejects representative
+-- invalid writes. Each expected exception rolls back its sub-block, so these
+-- probes leave the fixture unchanged.
+DO $$
+DECLARE
+    rejected boolean;
+BEGIN
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.service_sites (site_id, name, category, opened_on, geom)
+        VALUES (
+            1,
+            'duplicate primary-key probe',
+            'test',
+            DATE '2026-01-01',
+            ST_SetSRID(ST_MakePoint(-81.0, 29.0), 4326)
+        );
+    EXCEPTION WHEN unique_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Duplicate service-site primary key was accepted';
+    END IF;
+
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.service_sites (site_id, name, category, opened_on, geom)
+        VALUES (
+            1001,
+            'null geometry probe',
+            'test',
+            DATE '2026-01-01',
+            NULL
+        );
+    EXCEPTION WHEN not_null_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Null service-site geometry was accepted';
+    END IF;
+
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.sensor_observations (site_id, observed_at, reading_value, geom)
+        VALUES (
+            2147483000,
+            TIMESTAMPTZ '2026-06-01 12:00:00+00',
+            1.0,
+            ST_SetSRID(ST_MakePoint(-81.0, 29.0), 4326)
+        );
+    EXCEPTION WHEN foreign_key_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Observation referencing a nonexistent site was accepted';
+    END IF;
+
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.sensor_observations_partitioned
+            (site_id, observed_at, reading_value, geom)
+        VALUES (
+            1,
+            TIMESTAMPTZ '2025-12-31 23:59:59+00',
+            1.0,
+            ST_SetSRID(ST_MakePoint(-81.0, 29.0), 4326)
+        );
+    EXCEPTION WHEN check_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Observation outside configured partitions was accepted';
+    END IF;
+
+    IF (SELECT count(*) FROM demo.service_sites) <> 9
+       OR (SELECT count(*) FROM demo.sensor_observations) <> 27
+       OR (SELECT count(*) FROM demo.sensor_observations_partitioned) <> 27 THEN
+        RAISE EXCEPTION 'Negative-path tests changed the demo fixture';
+    END IF;
+END
+$$;
+
+SELECT 'postgis-cookbook negative-path regression tests passed' AS result;
