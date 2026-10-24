@@ -1,1 +1,0 @@
--- Pattern 07: Raster operations and analysis

@@ -1,1 +1,0 @@
--- Pattern 08: Spatial clustering with ST_ClusterDBSCAN
