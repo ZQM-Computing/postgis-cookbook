@@ -37,19 +37,23 @@ WHERE ST_DWithin(
     7500
 );
 
--- Find the nearest other site for every site. The <-> operator gives an
--- index-assisted KNN ordering; the exact geography distance is calculated
--- only for the selected neighbor.
+-- Find the exact nearest other site for every site using geography
+-- distance. Ordering point geometries with <-> is a fast planar KNN strategy,
+-- but it is not a general guarantee of spheroidal-distance ordering. This
+-- all-candidates query is appropriate for the tiny demo; use a measured and
+-- validated candidate strategy for large datasets.
 SELECT
     site.name AS site,
     nearest.name AS nearest_site,
-    round((ST_Distance(site.geom::geography, nearest.geom::geography) / 1000.0)::numeric, 2) AS distance_km
+    round((nearest.exact_distance_m / 1000.0)::numeric, 2) AS distance_km
 FROM demo.service_sites AS site
 CROSS JOIN LATERAL (
-    SELECT candidate.name, candidate.geom
+    SELECT
+        candidate.name,
+        ST_Distance(site.geom::geography, candidate.geom::geography) AS exact_distance_m
     FROM demo.service_sites AS candidate
     WHERE candidate.site_id <> site.site_id
-    ORDER BY site.geom <-> candidate.geom
+    ORDER BY exact_distance_m, candidate.site_id
     LIMIT 1
 ) AS nearest
 ORDER BY site.name;
