@@ -15,7 +15,7 @@
 
 [![Validate examples](https://github.com/ZQM-Computing/postgis-cookbook/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-cookbook/actions)
 
-Practical PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
+Practical PostgreSQL and PostGIS tutorials with runnable spatial SQL for GiST/SP-GiST/BRIN indexing, spatial joins, K-nearest-neighbor (KNN) searches, CRS/SRID management, geometry quality checks, table maintenance, partitioning, and vector tiles with `ST_AsMVT`. Synthetic examples and automated checks support reproducible learning; validate query plans and workload assumptions before production use.
 
 The examples use a small, synthetic dataset shaped like a Florida county: service areas, sites, parcels, and sensor observations. Every pattern answers a practical question, runs against the sample data, and calls out the trade-off or anti-pattern that matters in production.
 
