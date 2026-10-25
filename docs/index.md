@@ -1,3 +1,6 @@
+Title: PostGIS Patterns
+Description: Runnable PostgreSQL/PostGIS spatial SQL for indexing, spatial joins, KNN, SRID management, geometry QA, partitioning, maintenance, and vector tiles.
+
 # PostGIS Patterns
 
 Practical examples and tested patterns for working with PostgreSQL and PostGIS.
