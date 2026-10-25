@@ -19,7 +19,7 @@ Production-minded PostGIS patterns for people who build and operate spatial data
 
 The examples use a small, synthetic dataset shaped like a Florida county: service areas, sites, parcels, and sensor observations. Every pattern answers a practical question, runs against the sample data, and calls out the trade-off or anti-pattern that matters in production.
 
-**Who this is for:** GIS analysts moving into spatial database work, backend and data engineers adding geospatial queries to PostgreSQL, and geospatial architects who need defensible, production-tested patterns instead of one-off snippets. Think of it as a PostGIS tutorial you can actually run — every example executes end-to-end against the included Docker demo and is verified by CI.
+**Who this is for:** GIS analysts moving into spatial database work, backend and data engineers adding geospatial queries to PostgreSQL, and geospatial architects who need reproducible, tested examples instead of one-off snippets. Think of it as a PostGIS tutorial you can actually run — every example executes end-to-end against the included Docker demo and is verified by CI.
 
 ## Repository role and status
 
@@ -27,9 +27,9 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 
 **What this repository is:** Production PostGIS patterns — a runnable cookbook of spatial SQL covering GiST/SP-GiST/BRIN indexing, spatial joins and nearest-neighbor (KNN) queries, CRS and SRID management, and vector-tile generation.
 
-**What it contributes:** Part of the ZQM Computing public geospatial portfolio — production-grade pattern and reference repositories that document geospatial engineering practice across the stack. This repository is the reusable pattern library for its layer: working code and runbooks that practitioners can lift into their own pipelines, and portfolio evidence of the engineering practice behind ZQM Computing. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
+**What it contributes:** Part of the ZQM Computing geospatial portfolio. It provides runnable PostGIS SQL examples and operational guidance for spatial database workflows; validate behavior and performance against your own schema, data volume, query patterns, and PostgreSQL/PostGIS versions. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
 
-**Standing:** The portfolio program was completed and Tier-1 hardened on 2026-10-15, with prose CI enforced as required status checks. This repository is standalone — no other repository or deployment depends on it.
+**Validation scope:** The included examples and CI checks exercise the documented SQL against the synthetic demo fixture. The fixture is useful for correctness and smoke tests, not representative performance benchmarking; CI does not establish production readiness or successful recovery procedures.
 
 ## Patterns
 
