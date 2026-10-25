@@ -96,7 +96,7 @@ BEGIN
               'parcels_conservation_geom_gist',
               'sensor_observations_observed_at_brin'
           )
-    ) <> 5 THEN
+    ) <> 11 THEN
         RAISE EXCEPTION 'One or more core pattern indexes are missing';
     END IF;
 
