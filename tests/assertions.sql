@@ -86,8 +86,14 @@ BEGIN
           AND indexname IN (
               'service_areas_geom_gist',
               'service_sites_geom_gist',
+              'sensor_observations_geom_gist',
               'service_sites_geography_gist',
               'parcels_geom_gist',
+              'parcels_geography_gist',
+              'service_sites_category_idx',
+              'parcels_land_use_idx',
+              'sensor_observations_site_idx',
+              'parcels_conservation_geom_gist',
               'sensor_observations_observed_at_brin'
           )
     ) <> 5 THEN
@@ -105,8 +111,14 @@ BEGIN
           AND idx.relname IN (
               'service_areas_geom_gist',
               'service_sites_geom_gist',
+              'sensor_observations_geom_gist',
               'service_sites_geography_gist',
               'parcels_geom_gist',
+              'parcels_geography_gist',
+              'service_sites_category_idx',
+              'parcels_land_use_idx',
+              'sensor_observations_site_idx',
+              'parcels_conservation_geom_gist',
               'sensor_observations_observed_at_brin'
           )
           AND (NOT i.indisvalid OR NOT i.indisready)
