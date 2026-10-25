@@ -1,4 +1,4 @@
-# postgis-cookbook — Production PostGIS Patterns & Best Practices for PostgreSQL
+# postgis-cookbook — PostGIS Patterns & Best Practices for PostgreSQL
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/postgis-cookbook?style=social)
@@ -15,7 +15,7 @@
 
 [![Validate examples](https://github.com/ZQM-Computing/postgis-cookbook/actions/workflows/validate.yml/badge.svg)](https://github.com/ZQM-Computing/postgis-cookbook/actions)
 
-Production-minded PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
+Practical PostGIS patterns for people who build and operate spatial databases — not just query them once. A runnable cookbook of spatial SQL recipes covering **spatial indexing (GiST, SP-GiST, BRIN, partial indexes)**, **spatial joins and nearest-neighbor (KNN) queries**, **coordinate reference systems and SRID management**, **vector tiling with `ST_AsMVT`**, **geometry data-quality checks**, and **table partitioning and maintenance**.
 
 The examples use a small, synthetic dataset shaped like a Florida county: service areas, sites, parcels, and sensor observations. Every pattern answers a practical question, runs against the sample data, and calls out the trade-off or anti-pattern that matters in production.
 
@@ -25,7 +25,7 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 
 **Status:** Active, public.
 
-**What this repository is:** Production PostGIS patterns — a runnable cookbook of spatial SQL covering GiST/SP-GiST/BRIN indexing, spatial joins and nearest-neighbor (KNN) queries, CRS and SRID management, and vector-tile generation.
+**What this repository is:** A runnable cookbook of practical PostGIS SQL examples covering GiST/SP-GiST/BRIN indexing, spatial joins and nearest-neighbor (KNN) queries, CRS and SRID management, and vector-tile generation.
 
 **What it contributes:** Part of the ZQM Computing geospatial portfolio. It provides runnable PostGIS SQL examples and operational guidance for spatial database workflows; validate behavior and performance against your own schema, data volume, query patterns, and PostgreSQL/PostGIS versions. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
 
@@ -144,7 +144,7 @@ Maintained by [ZQM Computing](https://github.com/ZQM-Computing). Patterns distil
 - [duckdb-spatial-cookbook](https://github.com/ZQM-Computing/duckdb-spatial-cookbook) — DuckDB Spatial patterns for analytical geospatial SQL: GeoParquet, spatial joins, KNN, H3 aggregation — no server required
 - [pgrouting-cookbook](https://github.com/ZQM-Computing/pgrouting-cookbook) — pgRouting network analysis on PostGIS: shortest path, driving distance, isochrones, turn restrictions, traffic-aware routing
 - [geopandas-cookbook](https://github.com/ZQM-Computing/geopandas-cookbook) — GeoPandas/Shapely patterns for Python geospatial workflows: spatial joins, CRS handling, overlays, interpolation, performance
-- [gdal-cookbook](https://github.com/ZQM-Computing/gdal-cookbook) — GDAL/OGR command-line patterns: conversion, reprojection, clipping, mosaicking — production-tested, runnable examples
+- [gdal-cookbook](https://github.com/ZQM-Computing/gdal-cookbook) — GDAL/OGR command-line patterns: conversion, reprojection, clipping, mosaicking — runnable examples; validate against your GDAL version and target data
 - [stac-cookbook](https://github.com/ZQM-Computing/stac-cookbook) — STAC patterns for geospatial data discovery: catalogs, item validation, search API, bulk operations, cloud deployment
 - [maplibre-cookbook](https://github.com/ZQM-Computing/maplibre-cookbook) — MapLibre GL JS patterns for frontend vector tile rendering: custom layers, 3D terrain, performance tuning, interactive maps
 - [cog-cookbook](https://github.com/ZQM-Computing/cog-cookbook) — Cloud Optimized GeoTIFF patterns: creation, validation, TiTiler serving, xarray integration, performance benchmarking
@@ -152,7 +152,7 @@ Maintained by [ZQM Computing](https://github.com/ZQM-Computing). Patterns distil
 - [h3-cookbook](https://github.com/ZQM-Computing/h3-cookbook) — H3 hexagonal grid patterns: indexing, aggregation, visualization, grid comparisons, performance benchmarks
 - [qgis-resources](https://github.com/ZQM-Computing/qgis-resources) — QGIS expressions, PyQGIS snippets, Processing scripts, styles, and QField field-collection guides
 - [geospatial-api-reference](https://github.com/ZQM-Computing/geospatial-api-reference) — OGC API – Features reference implementation with FastAPI and PostGIS backends
-- [ollama-fleet-patterns](https://github.com/ZQM-Computing/ollama-fleet-patterns) — Ollama fleet operations: model management, health checks, load-spreading, VRAM budgeting, dependency-light RAG
+- [ollama-fleet-cookbook](https://github.com/ZQM-Computing/ollama-fleet-cookbook) — Ollama fleet operations: model management, health checks, load-spreading, VRAM budgeting, dependency-light RAG
 - [proxmox-ceph-operations](https://github.com/ZQM-Computing/proxmox-ceph-operations) — Proxmox VE + Ceph operations runbooks: health checks, backup discipline, OSD replacement, upgrade checklists
 - [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks) — Umbrella index for all ZQM geospatial pattern repos
 
