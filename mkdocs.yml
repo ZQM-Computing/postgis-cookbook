@@ -1,6 +1,8 @@
 site_name: PostGIS Patterns
 site_url: https://postgis.zqmlabs.com/
-site_description: Practical, testable PostgreSQL and PostGIS examples.
+site_description: Runnable PostgreSQL/PostGIS spatial SQL for indexing, spatial joins, KNN, SRID management, geometry QA, partitioning, maintenance, and vector tiles.
+site_author: ZQM Computing
+repo_url: https://github.com/ZQM-Computing/postgis-cookbook
 docs_dir: docs
 site_dir: site
 strict: true
