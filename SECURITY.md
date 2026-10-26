@@ -11,8 +11,8 @@ If you discover a security vulnerability in this project, please report it respo
 ## Supported Versions
 
 | Version | Supported |
-|---------|-----------|
-| Latest  | Yes       |
+| --------- | ----------- |
+| Latest | Yes |
 
 ## Scope
 
