@@ -41,6 +41,7 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 | Tiling and simplification | How do I prepare polygons for fast web delivery? | [`patterns/04_tiling_and_simplification.sql`](patterns/04_tiling_and_simplification.sql) |
 | Data quality | How do I find invalid, duplicate, empty, or mixed-SRID data? | [`patterns/05_data_quality.sql`](patterns/05_data_quality.sql) |
 | Partitioning and maintenance | How do I keep a growing spatial table observable and manageable? | [`patterns/06_partitioning_and_maintenance.sql`](patterns/06_partitioning_and_maintenance.sql) |
+| Security / multi-tenant access | How do I restrict which spatial features a role can see? | [`patterns/07_row_level_security.sql`](patterns/07_row_level_security.sql) |
 
 Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL, [`docs/production-runbook.md`](docs/production-runbook.md) for ingestion, query-plan, migration, security, and recovery checklists, and [`scripts/benchmark_queries.sql`](scripts/benchmark_queries.sql) for a read-only query-plan inspection harness.
 
@@ -94,7 +95,7 @@ bash scripts/wait_for_db.sh
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < sql/00_extensions_and_schema.sql
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < sql/01_sample_data.sql
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < patterns/01_indexing.sql
-# Continue with patterns 02–06, then tests/assertions.sql.
+# Continue with patterns 02–07, then tests/assertions.sql.
 ```
 
 ## Design principles
