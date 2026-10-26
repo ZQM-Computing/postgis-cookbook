@@ -5,7 +5,7 @@ The SQL files are the runnable reference. This guide records the decisions behin
 ## Geometry or geography?
 
 | Need | Prefer | Why |
-|---|---|---|
+| --- | --- | --- |
 | Store longitude/latitude and run topological predicates | `geometry(..., 4326)` | Full PostGIS function support and explicit SRID typing |
 | Distance or area in meters on longitude/latitude data | Cast to `geography` | Spheroid-aware measurement without choosing a local projection |
 | Area, length, buffering, or overlay in a local projected CRS | Transform to that CRS | Planar operations in known units, with projection distortion understood |
@@ -18,7 +18,7 @@ For the Florida-shaped demo, EPSG:2236 (Florida State Plane East, US survey feet
 ## Index selection
 
 | Index | Use it when | Watch out for |
-|---|---|---|
+| --- | --- | --- |
 | GiST on `geometry` | Default choice for overlap, intersection, containment, and many nearest-neighbor workloads | Write and storage cost on frequently updated layers |
 | GiST on `(geom::geography)` | Repeated meter-based `ST_DWithin` or distance work on longitude/latitude data | The query must use the same expression for the index to match |
 | SP-GiST | Point-heavy or non-overlapping partitioned space workloads where its partitioning fits better than GiST | Benchmark; it is not a universal upgrade |

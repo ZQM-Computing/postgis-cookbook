@@ -34,7 +34,7 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 ## Patterns
 
 | Pattern | Question it answers | File |
-|---|---|---|
+| --- | --- | --- |
 | Indexing | Which index belongs on this geometry or timestamp? | [`patterns/01_indexing.sql`](patterns/01_indexing.sql) |
 | Spatial joins | How do I join, filter by distance, and find nearest neighbors efficiently? | [`patterns/02_spatial_joins.sql`](patterns/02_spatial_joins.sql) |
 | Coordinate systems | When should I use geometry, geography, or a projected CRS? | [`patterns/03_coordinate_systems.sql`](patterns/03_coordinate_systems.sql) |
