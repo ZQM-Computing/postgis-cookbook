@@ -33,15 +33,15 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 
 ## Patterns
 
-| Pattern | Question it answers | File |
+|Pattern|Question it answers|File|
 |---|---|---|
-| Indexing | Which index belongs on this geometry or timestamp? | [`patterns/01_indexing.sql`](patterns/01_indexing.sql) |
-| Spatial joins | How do I join, filter by distance, and find nearest neighbors efficiently? | [`patterns/02_spatial_joins.sql`](patterns/02_spatial_joins.sql) |
-| Coordinate systems | When should I use geometry, geography, or a projected CRS? | [`patterns/03_coordinate_systems.sql`](patterns/03_coordinate_systems.sql) |
-| Tiling and simplification | How do I prepare polygons for fast web delivery? | [`patterns/04_tiling_and_simplification.sql`](patterns/04_tiling_and_simplification.sql) |
-| Data quality | How do I find invalid, duplicate, empty, or mixed-SRID data? | [`patterns/05_data_quality.sql`](patterns/05_data_quality.sql) |
-| Partitioning and maintenance | How do I keep a growing spatial table observable and manageable? | [`patterns/06_partitioning_and_maintenance.sql`](patterns/06_partitioning_and_maintenance.sql) |
-| Security / multi-tenant access | How do I restrict which spatial features a role can see? | [`patterns/07_row_level_security.sql`](patterns/07_row_level_security.sql) |
+|Indexing|Which index belongs on this geometry or timestamp?|[`patterns/01_indexing.sql`](patterns/01_indexing.sql)|
+|Spatial joins|How do I join, filter by distance, and find nearest neighbors efficiently?|[`patterns/02_spatial_joins.sql`](patterns/02_spatial_joins.sql)|
+|Coordinate systems|When should I use geometry, geography, or a projected CRS?|[`patterns/03_coordinate_systems.sql`](patterns/03_coordinate_systems.sql)|
+|Tiling and simplification|How do I prepare polygons for fast web delivery?|[`patterns/04_tiling_and_simplification.sql`](patterns/04_tiling_and_simplification.sql)|
+|Data quality|How do I find invalid, duplicate, empty, or mixed-SRID data?|[`patterns/05_data_quality.sql`](patterns/05_data_quality.sql)|
+|Partitioning and maintenance|How do I keep a growing spatial table observable and manageable?|[`patterns/06_partitioning_and_maintenance.sql`](patterns/06_partitioning_and_maintenance.sql)|
+|Security / multi-tenant access|How do I restrict which spatial features a role can see?|[`patterns/07_row_level_security.sql`](patterns/07_row_level_security.sql)|
 
 Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL, [`docs/production-runbook.md`](docs/production-runbook.md) for ingestion, query-plan, migration, security, and recovery checklists, and [`scripts/benchmark_queries.sql`](scripts/benchmark_queries.sql) for a read-only query-plan inspection harness.
 
