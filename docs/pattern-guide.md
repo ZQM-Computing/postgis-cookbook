@@ -96,3 +96,13 @@ Use `CREATE INDEX CONCURRENTLY` for large production tables, and treat the migra
 - [ ] Backup and restore have been tested, including extensions.
 - [ ] Version upgrades test spatial functions and planner behavior.
 - [ ] No real sensitive location data appears in examples, fixtures, or issues.
+
+
+## Row-level security and spatial data
+
+- Prefer stable attribute predicates (for example, \`tenant_id\` or \`jurisdiction_id\`) when they express the authorization rule. They are usually simpler to reason about and can be cheaper than evaluating a geometry predicate for every candidate row.
+- When the rule is genuinely geometric, use \`ST_Intersects\` or \`ST_Covers\` against a small, controlled lookup table of service areas or jurisdictions. Choose the predicate deliberately: boundary-touching features may match \`ST_Intersects\`.
+- Grant the policy roles only the schema and table privileges they require. Row-level security filters rows; it does not replace ordinary SQL privileges or protect against superusers and roles with \`BYPASSRLS\`.
+- Test policies with \`SET ROLE\` / \`RESET ROLE\`, including both permitted and excluded rows. Review \`EXPLAIN\` plans on representative data; do not assume a spatial index will be used simply because a GiST index exists.
+- \`FORCE ROW LEVEL SECURITY\` also subjects table owners to policies, but superusers and \`BYPASSRLS\` roles can still bypass them. Design owner, migration, and application roles explicitly.
+- Treat policy DDL and role grants as migrations. The cookbook example uses a transaction and uniquely named disposable roles, and removes them on success so later patterns and CI see the original fixture. Production policies should be managed through reviewed migrations, not copied with demo role names.
