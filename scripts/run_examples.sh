@@ -23,6 +23,7 @@ run_sql patterns/03_coordinate_systems.sql
 run_sql patterns/04_tiling_and_simplification.sql
 run_sql patterns/05_data_quality.sql
 run_sql patterns/06_partitioning_and_maintenance.sql
+run_sql patterns/07_row_level_security.sql
 run_sql tests/assertions.sql
 
 echo

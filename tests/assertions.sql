@@ -404,3 +404,44 @@ END
 $$;
 
 SELECT 'postgis-cookbook negative-path regression tests passed' AS result;
+
+
+-- The row-level-security example must leave the shared fixture and role catalog
+-- clean for subsequent patterns and repeatable CI runs.
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM pg_class AS relation
+        JOIN pg_namespace AS namespace ON namespace.oid = relation.relnamespace
+        WHERE namespace.nspname = 'demo'
+          AND relation.relname IN ('service_sites', 'parcels')
+          AND (relation.relrowsecurity OR relation.relforcerowsecurity)
+    ) THEN
+        RAISE EXCEPTION 'Pattern 07 left row-level security enabled on a shared fixture table';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM pg_policies
+        WHERE schemaname = 'demo'
+          AND policyname LIKE 'postgis_cb_%'
+    ) THEN
+        RAISE EXCEPTION 'Pattern 07 left a demo row-level security policy behind';
+    END IF;
+
+    IF EXISTS (
+        SELECT 1
+        FROM pg_roles
+        WHERE rolname IN (
+            'postgis_cb_north_ops',
+            'postgis_cb_coastal_ops',
+            'postgis_cb_read_all_geo'
+        )
+    ) THEN
+        RAISE EXCEPTION 'Pattern 07 left a temporary demo role behind';
+    END IF;
+END
+$$;
+
+SELECT 'postgis-cookbook RLS cleanup assertions passed' AS result;
