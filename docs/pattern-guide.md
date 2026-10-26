@@ -97,7 +97,6 @@ Use `CREATE INDEX CONCURRENTLY` for large production tables, and treat the migra
 - [ ] Version upgrades test spatial functions and planner behavior.
 - [ ] No real sensitive location data appears in examples, fixtures, or issues.
 
-
 ## Row-level security and spatial data
 
 - Prefer stable attribute predicates (for example, \`tenant_id\` or \`jurisdiction_id\`) when they express the authorization rule. They are usually simpler to reason about and can be cheaper than evaluating a geometry predicate for every candidate row.
