@@ -4,12 +4,12 @@ The SQL files are the runnable reference. This guide records the decisions behin
 
 ## Geometry or geography?
 
-| Need | Prefer | Why |
+|Need|Prefer|Why|
 |---|---|---|
-| Store longitude/latitude and run topological predicates | `geometry(..., 4326)` | Full PostGIS function support and explicit SRID typing |
-| Distance or area in meters on longitude/latitude data | Cast to `geography` | Spheroid-aware measurement without choosing a local projection |
-| Area, length, buffering, or overlay in a local projected CRS | Transform to that CRS | Planar operations in known units, with projection distortion understood |
-| Web-map display | Transform at the delivery boundary, often EPSG:3857 | Keeps storage and measurement semantics separate from display |
+|Store longitude/latitude and run topological predicates|`geometry(..., 4326)`|Full PostGIS function support and explicit SRID typing|
+|Distance or area in meters on longitude/latitude data|Cast to `geography`|Spheroid-aware measurement without choosing a local projection|
+|Area, length, buffering, or overlay in a local projected CRS|Transform to that CRS|Planar operations in known units, with projection distortion understood|
+|Web-map display|Transform at the delivery boundary, often EPSG:3857|Keeps storage and measurement semantics separate from display|
 
 Never calculate meaningful area or distance in EPSG:3857. Web Mercator is a display projection, not a measurement system.
 
@@ -17,14 +17,14 @@ For the Florida-shaped demo, EPSG:2236 (Florida State Plane East, US survey feet
 
 ## Index selection
 
-| Index | Use it when | Watch out for |
+|Index|Use it when|Watch out for|
 |---|---|---|
-| GiST on `geometry` | Default choice for overlap, intersection, containment, and many nearest-neighbor workloads | Write and storage cost on frequently updated layers |
-| GiST on `(geom::geography)` | Repeated meter-based `ST_DWithin` or distance work on longitude/latitude data | The query must use the same expression for the index to match |
-| SP-GiST | Point-heavy or non-overlapping partitioned space workloads where its partitioning fits better than GiST | Benchmark; it is not a universal upgrade |
-| BRIN on time or a physically correlated column | Very large, append-mostly tables whose rows are stored roughly in value order | Useless when physical order is random |
-| Partial GiST | A stable, selective subset is queried constantly — for example, active or conservation parcels | Too many narrow indexes can cost more than they save |
-| Expression index | The application repeatedly filters or orders by the same derived spatial expression | The expression in the query must match the indexed expression |
+|GiST on `geometry`|Default choice for overlap, intersection, containment, and many nearest-neighbor workloads|Write and storage cost on frequently updated layers|
+|GiST on `(geom::geography)`|Repeated meter-based `ST_DWithin` or distance work on longitude/latitude data|The query must use the same expression for the index to match|
+|SP-GiST|Point-heavy or non-overlapping partitioned space workloads where its partitioning fits better than GiST|Benchmark; it is not a universal upgrade|
+|BRIN on time or a physically correlated column|Very large, append-mostly tables whose rows are stored roughly in value order|Useless when physical order is random|
+|Partial GiST|A stable, selective subset is queried constantly — for example, active or conservation parcels|Too many narrow indexes can cost more than they save|
+|Expression index|The application repeatedly filters or orders by the same derived spatial expression|The expression in the query must match the indexed expression|
 
 An index is not finished when it is created. Confirm the planner uses it on representative data, then re-check after major loads and version upgrades.
 
