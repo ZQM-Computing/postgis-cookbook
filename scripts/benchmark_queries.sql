@@ -24,6 +24,26 @@ FROM pg_stat_user_tables
 WHERE schemaname = 'demo'
 ORDER BY relname;
 
+\echo 'Index inventory, validity, size, and observed usage'
+-- Read the catalog after the example workload. A zero scan count on the tiny
+-- synthetic fixture is not evidence that an index is useless; use production
+-- workload history before dropping or consolidating indexes.
+SELECT 'index_diagnostics' AS section,
+       stats.relname AS table_name,
+       stats.indexrelname AS index_name,
+       stats.idx_scan,
+       stats.idx_tup_read,
+       stats.idx_tup_fetch,
+       pg_size_pretty(pg_relation_size(stats.indexrelid)) AS index_size,
+       index_state.indisvalid AS is_valid,
+       index_state.indisready AS is_ready,
+       pg_get_indexdef(stats.indexrelid) AS index_definition
+FROM pg_stat_user_indexes AS stats
+JOIN pg_index AS index_state
+  ON index_state.indexrelid = stats.indexrelid
+WHERE stats.schemaname = 'demo'
+ORDER BY stats.relname, stats.indexrelname;
+
 \echo '1. Geometry index / bounding-box candidate plus exact intersection'
 EXPLAIN (ANALYZE, BUFFERS, VERBOSE, SETTINGS)
 SELECT area.area_id
