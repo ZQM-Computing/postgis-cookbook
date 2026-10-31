@@ -120,6 +120,18 @@ docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=
 └── Makefile                   # up, psql, validate, reset, down
 ```
 
+## Distribution-aware spatial-index benchmark
+
+To compare GiST behavior across different point distributions, run the optional experiment after the demo database is initialized:
+
+```bash
+docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < scripts/benchmark_spatial_index.sql
+```
+
+The script creates two temporary 200,000-point datasets (uniform and four-cluster), builds GiST indexes, runs `ANALYZE`, and captures planner-selected, index-eligible, and sequential-scan plans with `EXPLAIN (ANALYZE, BUFFERS, SETTINGS)`. It verifies bounding-box result counts against exact intersection counts. All benchmark tables are temporary and disappear when the psql session ends; existing demo tables are not modified.
+
+This is a controlled experiment, not a universal index-performance claim. Planner settings are toggled only to expose alternative plans; the planner-selected plan is the operational baseline. Compare actual rows, buffers, planning/execution time, and the dataset profile. Repeat on representative production-like geometries, selectivities, hardware, and PostgreSQL/PostGIS versions before changing index strategy. Timings from this script have not been collected or asserted by CI.
+
 ## Production notes
 
 - Pin the PostGIS and PostgreSQL versions in real deployments; spatial function behavior and planner statistics are part of your platform contract.
