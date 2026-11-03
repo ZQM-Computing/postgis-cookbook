@@ -120,9 +120,7 @@ Draft a *bounded* implementation statement only where discovery supports it:
 
 Use the existing [production runbook](production-runbook.md), especially
 its data quality, schema, index, security and recovery controls. Demonstration
-patterns in [data quality](../patterns/05_data_quality.sql), [CRS
-management](../patterns/03_coordinate_systems.sql) and [row-level
-security](../patterns/07_row_level_security.sql) are **reference code on
+patterns in [data quality](https://github.com/ZQM-Computing/postgis-cookbook/blob/main/patterns/05_data_quality.sql), [CRS management](https://github.com/ZQM-Computing/postgis-cookbook/blob/main/patterns/03_coordinate_systems.sql) and [row-level security](https://github.com/ZQM-Computing/postgis-cookbook/blob/main/patterns/07_row_level_security.sql) are **reference code on
 synthetic fixtures**, not evidence that a particular client's migration
 has been tested or approved.
 
