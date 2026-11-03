@@ -45,6 +45,23 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 
 Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL, [`docs/production-runbook.md`](docs/production-runbook.md) for ingestion, query-plan, migration, security, and recovery checklists, and [`scripts/benchmark_queries.sql`](scripts/benchmark_queries.sql) for a read-only query-plan inspection harness.
 
+## Migration discovery service application
+
+For engineering and environmental teams considering a change of spatial
+database or data pipeline, the [migration discovery template](docs/migration-discovery.md)
+maps the cookbook's technical patterns to a bounded commercial assessment.
+It covers source inventory, CRS and geometry correctness, data reconciliation,
+security, cutover risks, acceptance checks, and a separate implementation
+scope. ZQM Computing's proposed discovery fee is **$2,000–$4,000**, subject
+to confirmed scope and contracting terms; the open-source cookbook remains
+free to use.
+
+This template is **not** a completed client project or production migration
+case study. It makes no claim of savings, regulatory certification or
+deployment readiness. For a fit discussion, contact
+[Alex Zelenski](mailto:alexzelenski@outlook.com) without sending credentials
+or confidential datasets by ordinary email.
+
 ## How the patterns fit together
 
 ```mermaid
