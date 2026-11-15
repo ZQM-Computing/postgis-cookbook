@@ -42,8 +42,15 @@ The examples use a small, synthetic dataset shaped like a Florida county: servic
 | Data quality | How do I find invalid, duplicate, empty, or mixed-SRID data? | [`patterns/05_data_quality.sql`](patterns/05_data_quality.sql) |
 | Partitioning and maintenance | How do I keep a growing spatial table observable and manageable? | [`patterns/06_partitioning_and_maintenance.sql`](patterns/06_partitioning_and_maintenance.sql) |
 | Security / multi-tenant access | How do I restrict which spatial features a role can see? | [`patterns/07_row_level_security.sql`](patterns/07_row_level_security.sql) |
+| Environmental constraints / exhibit prep | How do I screen synthetic parcels against wetland/flood indicators with provenance and QA flags? | [`patterns/08_environmental_constraints.sql`](patterns/08_environmental_constraints.sql) |
 
 Read [`docs/pattern-guide.md`](docs/pattern-guide.md) for the decision rules behind the SQL, [`docs/production-runbook.md`](docs/production-runbook.md) for ingestion, query-plan, migration, security, and recovery checklists, and [`scripts/benchmark_queries.sql`](scripts/benchmark_queries.sql) for a read-only query-plan inspection harness.
+
+## Rank 1: environmental GIS subcontract production evidence
+
+The [synthetic environmental constraints exhibit example](examples/07-environmental-constraints/README.md) demonstrates database-side intersection, source coverage, QA and map-series data preparation for environmental and engineering consultants. Such outputs support the **type of production workflow** a consulting firm may subcontract; this example is **not evidence of a completed client engagement**.
+
+**Synthetic geometry only; desktop/database work only.** It is not a field wetland delineation, jurisdictional determination, Phase I environmental site assessment, survey, regulatory approval or professional certification. The source and retrieval-date register and explicit unknown-coverage flags are required. Calculations use Florida State Plane East EPSG:2236 (US survey feet) and convert ft² to acres; dataset resolution, license, effective date, and uncertainty require separate professional verification before real-world use.
 
 ## Migration discovery service application
 
@@ -112,7 +119,7 @@ bash scripts/wait_for_db.sh
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < sql/00_extensions_and_schema.sql
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < sql/01_sample_data.sql
 docker compose exec -T db psql -U patterns -d postgis_patterns -v ON_ERROR_STOP=1 < patterns/01_indexing.sql
-# Continue with patterns 02–07, then tests/assertions.sql.
+# Continue with patterns 02–08, the read-only Example 07 view, then tests/assertions.sql.
 ```
 
 ## Design principles
