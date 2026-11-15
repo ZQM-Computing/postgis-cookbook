@@ -95,3 +95,16 @@ Partition only when query pruning, retention, or lifecycle operations justify th
 - [ ] Runtime and PostGIS versions recorded.
 - [ ] Operational owner, alert thresholds, and recovery procedure documented.
 - [ ] Post-release validation query and rollback trigger identified.
+
+## 9. Rank 1 subcontract exhibit delivery checklist
+
+**Synthetic example only; desktop/database analysis, not a field wetland delineation, jurisdictional determination, Phase I ESA, survey, certification or permit approval.** A consulting firm's responsible professional must validate regulatory context and final exhibits separately.
+
+- [ ] Intake: document requested exhibit list, delivery formats, parcel IDs, general extent, client-provided licenses, permissible use and reviewer.
+- [ ] Source and date: preserve immutable input source register (publisher, dataset, retrieval/effective dates or explicit unknown, version/URL, coverage, spatial resolution/known limitations).
+- [ ] CRS: validate original CRS/SRID; transform for calculations; record EPSG:2236 **US survey feet** and acre conversion if used for Florida East demonstration.
+- [ ] QA: reject null/empty/invalid geometries and mismatched SRID; check duplicates and union same-type overlaps to prevent double count.
+- [ ] Unknowns: distinguish no mapped hit from no/partial data coverage, boundary uncertainty and any source disagreement.
+- [ ] Exhibit set: verify page/scale/legend, north arrow as applicable, source citation, figure IDs, revision register, clipped layers and reproducibility.
+- [ ] Handoff: deliver source register, per-parcel screening matrix, geometry exports, QA findings, disclaimers, file inventory and explicit review/sign-off responsibilities.
+- [ ] Never label an unreviewed GIS preview `permit-approved`, `delineated` or a completed client engagement.
