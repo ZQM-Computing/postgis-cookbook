@@ -506,12 +506,10 @@ BEGIN
     -- The database contract must reject incomplete source registration.
     rejected := false;
     BEGIN
-        INSERT INTO demo.environmental_source_register
-            (source_id, constraint_type, dataset_name, publisher, retrieved_on,
-             dataset_version, source_url, known_limitations)
-        VALUES ('BAD-URL', 'wetland_indicator', 'bad', 'synthetic',
-                DATE '2026-11-14', 'fixture', 'http://not-https.invalid', 'bad');
-    EXCEPTION WHEN check_violation OR unique_violation THEN
+        UPDATE demo.environmental_source_register
+        SET source_url = 'http://not-https.invalid'
+        WHERE source_id = 'SYN-WET';
+    EXCEPTION WHEN check_violation THEN
         rejected := true;
     END;
     IF NOT rejected THEN
