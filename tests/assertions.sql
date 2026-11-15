@@ -445,3 +445,96 @@ END
 $$;
 
 SELECT 'postgis-cookbook RLS cleanup assertions passed' AS result;
+
+-- Rank 1 negative and positive QA for SYNTHETIC environmental exhibit data.
+-- Desktop/database only: not wetland delineation, jurisdictional determination,
+-- Phase I ESA, survey, professional certification, or permit approval.
+-- Each result must retain source + retrieval date and uncertainty flags.
+DO $rank1_test$
+DECLARE
+    rejected boolean;
+BEGIN
+    IF (SELECT count(*) FROM demo.environmental_exhibit_summary) <> 6 THEN
+        RAISE EXCEPTION 'Rank 1 expected 3 parcels x 2 sources';
+    END IF;
+    IF (SELECT count(*) FROM demo.environmental_source_register) <> 2 THEN
+        RAISE EXCEPTION 'Rank 1 source register missing records';
+    END IF;
+    IF EXISTS (
+        SELECT 1 FROM demo.environmental_exhibit_summary
+        WHERE source_id IS NULL OR dataset_name IS NULL
+           OR publisher IS NULL OR retrieved_on IS NULL OR source_url IS NULL
+           OR btrim(known_limitations) = ''
+           OR measurement_srid <> 2236
+           OR linear_units <> 'US survey feet'
+           OR parcel_acres <= 0 OR known_overlap_acres < 0
+           OR known_overlap_acres > parcel_acres
+           OR coverage_pct < 0 OR coverage_pct > 100.01
+           OR overlap_pct < 0 OR overlap_pct > 100.01
+           OR (data_gap_flag AND screening_status NOT IN
+               ('no_source_coverage','partial_source_coverage'))
+    ) THEN
+        RAISE EXCEPTION 'Rank 1 output QA, source, CRS or uncertainty contract failed';
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM demo.environmental_exhibit_summary
+        WHERE parcel_id = 'SYNTH-000' AND constraint_type = 'wetland_indicator'
+          AND has_mapped_indicator AND NOT data_gap_flag AND known_overlap_acres > 0
+    ) THEN
+        RAISE EXCEPTION 'Rank 1 synthetic wetland intersection missing';
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM demo.environmental_exhibit_summary
+        WHERE parcel_id = 'SYNTH-001' AND constraint_type = 'flood_indicator'
+          AND has_mapped_indicator AND NOT data_gap_flag AND known_overlap_acres > 0
+    ) THEN
+        RAISE EXCEPTION 'Rank 1 synthetic flood intersection missing';
+    END IF;
+    IF (SELECT count(*) FROM demo.environmental_exhibit_summary
+        WHERE constraint_type = 'wetland_indicator'
+          AND screening_status = 'no_source_coverage'
+          AND data_gap_flag AND NOT has_mapped_indicator) <> 2 THEN
+        RAISE EXCEPTION 'Rank 1 absent wetland coverage incorrectly treated as negative';
+    END IF;
+    IF (SELECT count(*) FROM demo.environmental_exhibit_summary
+        WHERE constraint_type = 'flood_indicator'
+          AND screening_status = 'no_mapped_intersection'
+          AND NOT data_gap_flag AND NOT has_mapped_indicator) <> 2 THEN
+        RAISE EXCEPTION 'Rank 1 flood no-mapped-hit status or coverage incorrect';
+    END IF;
+
+    -- The database contract must reject incomplete source registration.
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.environmental_source_register
+            (source_id, constraint_type, dataset_name, publisher, retrieved_on,
+             dataset_version, source_url, known_limitations)
+        VALUES ('BAD-URL', 'wetland_indicator', 'bad', 'synthetic',
+                DATE '2026-11-14', 'fixture', 'http://not-https.invalid', 'bad');
+    EXCEPTION WHEN check_violation OR unique_violation THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Rank 1 invalid source registration accepted';
+    END IF;
+
+    -- A wrong SRID must not be accepted as geometrically valid display data.
+    rejected := false;
+    BEGIN
+        INSERT INTO demo.wetland_indicators (indicator_id, source_id, geom)
+        VALUES ('BAD-SRID', 'SYN-WET',
+                ST_Multi(ST_MakeEnvelope(0, 0, 5, 5, 3857)));
+    EXCEPTION WHEN check_violation OR invalid_parameter_value THEN
+        rejected := true;
+    END;
+    IF NOT rejected THEN
+        RAISE EXCEPTION 'Rank 1 wrong SRID was accepted';
+    END IF;
+    IF (SELECT count(*) FROM demo.wetland_indicators) <> 1
+       OR (SELECT count(*) FROM demo.flood_zones) <> 1 THEN
+        RAISE EXCEPTION 'Rank 1 negative QA changed fixture rows';
+    END IF;
+END
+$rank1_test$;
+
+SELECT 'Rank 1 synthetic exhibit QA and provenance assertions passed' AS result;
