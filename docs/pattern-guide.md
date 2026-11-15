@@ -105,3 +105,13 @@ Use `CREATE INDEX CONCURRENTLY` for large production tables, and treat the migra
 - Test policies with \`SET ROLE\` / \`RESET ROLE\`, including both permitted and excluded rows. Review \`EXPLAIN\` plans on representative data; do not assume a spatial index will be used simply because a GiST index exists.
 - \`FORCE ROW LEVEL SECURITY\` also subjects table owners to policies, but superusers and \`BYPASSRLS\` roles can still bypass them. Design owner, migration, and application roles explicitly.
 - Treat policy DDL and role grants as migrations. The cookbook example uses a transaction and uniquely named disposable roles, and removes them on success so later patterns and CI see the original fixture. Production policies should be managed through reviewed migrations, not copied with demo role names.
+
+## Rank 1: environmental constraint screen and exhibit preparation
+
+**Synthetic desktop/database demonstration only.** This workflow is not a field wetland delineation, jurisdictional determination, Phase I ESA, survey, professional certification or permit approval. Follow current authoritative sources and qualified field review for any real project.
+
+Use [Pattern 08](../patterns/08_environmental_constraints.sql) and the [Example 07 runner](../examples/07-environmental-constraints/README.md). Decision rule: `no_source_coverage` and `partial_source_coverage` are **uncertainty**, not a negative screen. Only compute `no_mapped_intersection` when the mapped layer's recorded coverage spans the entire candidate parcel; even that status is not a regulatory finding. Summation must union same-type indicators first to avoid double-counting overlaps.
+
+**Required source register:** dataset name, publisher, retrieval date, version/URL, known limitations, coverage footprint, and accuracy or unknown-accuracy statement. The synthetic pattern joins source fields to each resulting parcel/type row. Its output exposes `has_mapped_indicator`, `data_gap_flag`, `screening_status`, and overlap percentage. Area calculations first transform WGS84 geometry to Florida State Plane East EPSG:2236 with US survey-foot units; acres are ft² / 43,560. Do not accidentally use a metre-to-acre conversion factor in this CRS.
+
+Before a client-facing map/figure series: reconcile parcel and feature IDs, projection and units, source revisions, scale/legend, coverage and uncertain edges, QA failures, reviewer annotations and any field-verified findings. No generated map is evidence of certification or past client delivery.
