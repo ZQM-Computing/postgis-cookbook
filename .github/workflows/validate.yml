@@ -22,9 +22,23 @@ jobs:
       run:
         shell: bash
     timeout-minutes: 20
+    env:
+      COMPOSE_PROJECT_NAME: postgis-cookbook-${{ github.run_id }}-${{ github.run_attempt }}
+      POSTGIS_CONTAINER_NAME: postgis-cookbook-${{ github.run_id }}-${{ github.run_attempt }}-db
+      POSTGIS_PORT: "0"
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Isolate Docker configuration
+        id: docker-config
+        run: |
+          config_dir="$(mktemp -d "$RUNNER_TEMP/postgis-docker.XXXXXXXX")"
+          echo "DOCKER_CONFIG=$config_dir" >> "$GITHUB_ENV"
+          echo "path=$config_dir" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@54042514f505b273907334ae2b9cdbb9a0213c1a # v2
 
       - name: Validate Compose configuration
         run: docker compose config --quiet
@@ -64,3 +78,9 @@ jobs:
       - name: Tear down disposable database
         if: always()
         run: docker compose down --volumes --remove-orphans || true
+
+      - name: Remove Docker configuration
+        if: always() && steps.docker-config.outputs.path != ''
+        env:
+          CONFIG_DIR: ${{ steps.docker-config.outputs.path }}
+        run: rm -rf -- "$CONFIG_DIR"
