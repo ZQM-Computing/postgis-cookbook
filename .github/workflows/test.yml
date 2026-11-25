@@ -28,6 +28,11 @@ jobs:
       - name: Validate Compose configuration
         run: docker compose config --quiet
 
+      - name: Select ephemeral host port
+        run: |
+          POSTGIS_PORT=$(python3 -c "import socket; s=socket.socket(); s.bind(('127.0.0.1',0)); print(s.getsockname()[1]); s.close()")
+          echo "POSTGIS_PORT=$POSTGIS_PORT" >> "$GITHUB_ENV"
+
       - name: Start PostGIS and wait for health
         run: docker compose up -d --wait db
 
