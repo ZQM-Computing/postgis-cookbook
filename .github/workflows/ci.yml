@@ -21,6 +21,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select isolated Docker resources
+        run: |
+          RESOURCE="postgis-${GITHUB_JOB}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "POSTGIS_CONTAINER_NAME=$RESOURCE" >> "$GITHUB_ENV"
+          echo "POSTGIS_VOLUME_NAME=${RESOURCE}-data" >> "$GITHUB_ENV"
+
       - name: Set up Docker Compose
         uses: docker/setup-compose-action@2fe291b7677a45ee1269ec56a42604c143505e7e # v1
       - name: Validate Compose configuration
