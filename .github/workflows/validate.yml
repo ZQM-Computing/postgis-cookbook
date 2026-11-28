@@ -33,7 +33,7 @@ jobs:
           echo "POSTGIS_VOLUME_NAME=${RESOURCE}-data" >> "$GITHUB_ENV"
 
       - name: Set up Docker Compose
-        uses: docker/setup-compose-action@2fe291b7677a45ee1269ec56a42604c143505e7e # v1
+        uses: docker/setup-compose-action@54042514f505b273907334ae2b9cdbb9a0213c1a # v2.4.0
       - name: Select ephemeral host port
         run: |
           POSTGIS_PORT=$(python3 -c "import socket; s=socket.socket(); s.bind(('127.0.0.1',0)); print(s.getsockname()[1]); s.close()")
